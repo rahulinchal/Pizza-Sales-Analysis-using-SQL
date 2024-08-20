@@ -195,12 +195,17 @@ ORDER BY cnt DESC;
 
 -- 3. Join relevant tables to find the category-wise distribution of pizzas.
 
+
 SELECT 
-    category, COUNT(category) cnt
+    pt.category, sum(od.quantity) as sum
 FROM
-    pizza_types
-GROUP BY category
-ORDER BY cnt DESC;
+    pizzas AS p
+        JOIN
+    pizza_types pt ON p.pizza_type_id = pt.pizza_type_id
+        JOIN
+    order_Details od ON p.pizza_id = od.pizza_id
+GROUP BY pt.category; 
+ 
 
 -- 4. Group the orders by date and calculate the average number of pizzas ordered per day.
 
